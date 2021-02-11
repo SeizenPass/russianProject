@@ -56,6 +56,26 @@ public class CategoryDao extends Dao<Category> {
 
     @Override
     public Category get(int id) {
-        return null;
+        Category category = new Category();
+        try {
+            getConnection();
+            query = "SELECT * From categories where id = ?";
+            pStatement = connection.prepareStatement(query);
+            pStatement.setInt(1, id);
+            resultSet = pStatement.executeQuery();
+            if (resultSet.next()) {
+                int catId = resultSet.getInt("id");
+                String firstName = resultSet.getString("name");
+                category.setId(catId);
+                category.setName(firstName);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            closeStatementAndConnection(pStatement,connection);
+        }
+        return category;
     }
 }

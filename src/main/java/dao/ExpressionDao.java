@@ -1,6 +1,9 @@
 package dao;
 
+import model.Category;
 import model.Expression;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +53,36 @@ public class ExpressionDao extends Dao<Expression> {
 
     @Override
     public Expression get(int id) {
-        return null;
+        Expression expression = new Expression();
+        try {
+            getConnection();
+            query = "SELECT * From expressions where id = ?";
+            pStatement = connection.prepareStatement(query);
+            pStatement.setInt(1, id);
+            resultSet = pStatement.executeQuery();
+            if (resultSet.next()) {
+                int expr_id = resultSet.getInt("id");
+                String expr = resultSet.getString("expression");
+                String translation = resultSet.getString("translation");
+                String transcription = resultSet.getString("transcription");
+                String description = resultSet.getString("description");
+                String example = resultSet.getString("example");
+                int catId = resultSet.getInt("category_id");
+                expression.setId(expr_id);
+                expression.setExpression(expr);
+                expression.setTranscription(translation);
+                expression.setTranscription(transcription);
+                expression.setDescription(description);
+                expression.setExample(example);
+                expression.setCategoryId(catId);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            closeStatementAndConnection(pStatement,connection);
+        }
+        return expression;
     }
 }
