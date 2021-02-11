@@ -22,7 +22,7 @@
 
     <link href="jumbotron.css" rel="stylesheet">
     <script>$(document).ready(function() {
-        $('.mdb-select').materialSelect();
+
     });</script>
 </head>
 
@@ -82,35 +82,19 @@
             <div class="col-sm-4">
 
                 <ul class="nav nav-pills flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" style="margin-left: -100px;margin-bottom: 5px;" href="#">Link</a>
-                    </li>
+                    <c:forEach items="${requestScope.categoryList}" var="obj">
+                        <li class="nav-item">
+                        <h2></h2>
+                            <a class="nav-link active" style="margin-left: -100px;margin-bottom: 5px;" href="search?categoryId=${obj.id}"><c:out value="${obj.name}"/></a>
+                        </li>
+                    </c:forEach>
 
-                    <li class="nav-item">
-                        <a class="nav-link  active" style="margin-left: -100px;margin-bottom: 5px;" href="#">Link</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link  active" style="margin-left: -100px;margin-bottom: 5px;"  href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link  active" style="margin-left: -100px;margin-bottom: 5px;"  href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link  active" style="margin-left: -100px;margin-bottom: 5px;"  href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link  active" style="margin-left: -100px;margin-bottom: 5px;"  href="#">Link</a>
-                    </li>
 
                 </ul>
                 <hr class="d-sm-none">
             </div>
             <div class="col-md-8" style="border-left: 5px solid black;">
-                <c:forEach items="${requestScope.categoryList}" var="obj">
-                <h2><c:out value="${obj.name}"/></h2>
-                <p> </p>
-                </c:forEach>
+
 
             </div>
 

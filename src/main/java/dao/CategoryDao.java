@@ -5,10 +5,12 @@ import java.sql.SQLException;
 import java.util.Stack;
 
 public class CategoryDao extends Dao<Category> {
-    private final Stack<Category> categories= new Stack<>();
+    private Stack<Category> categories;
 
     @Override
     public Stack<Category> fetch() {
+        if (categories != null) return categories;
+        categories = new Stack<>();
         try {
             getConnection();
             query = "SELECT * From categories";
@@ -56,6 +58,30 @@ public class CategoryDao extends Dao<Category> {
 
     @Override
     public Category get(int id) {
-        return null;
+        Category category = new Category();
+        try {
+            getConnection();
+            query = "SELECT * From categories where id = ?";
+            pStatement = connection.prepareStatement(query);
+            pStatement.setInt(1, id);
+            resultSet = pStatement.executeQuery();
+            if (resultSet.next()) {
+                int catId = resultSet.getInt("id");
+                String firstName = resultSet.getString("name");
+                category.setId(catId);
+                category.setName(firstName);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            closeStatementAndConnection(pStatement,connection);
+        }
+        return category;
+    }
+
+    public Stack<Category> getCategories() {
+        return categories;
     }
 }

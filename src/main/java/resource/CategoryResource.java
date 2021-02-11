@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Stack;
 
 
 @Path("/category")
@@ -34,7 +35,7 @@ public class CategoryResource implements MainResource<Category> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public List<Category> list() {
+    public Stack<Category> list() {
         return categoryDao.fetch();
     }
 }
