@@ -65,6 +65,9 @@ public class Expression {
         this.categoryId = categoryId;
     }
 
+    public Expression() {
+    }
+
     public Expression(int id, String expression, String translation, String transcription, String description, String example, int categoryId) {
         this.id = id;
         this.expression = expression;
