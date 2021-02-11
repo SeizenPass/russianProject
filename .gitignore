@@ -30,6 +30,7 @@ _testmain.go
 .sublime-workspace
 
 # Directory-based project format:
+target/
 .idea/
 .idea/workspace.xml
 **/.idea/workspace.xml

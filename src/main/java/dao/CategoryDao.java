@@ -5,10 +5,12 @@ import java.sql.SQLException;
 import java.util.Stack;
 
 public class CategoryDao extends Dao<Category> {
-    private final Stack<Category> categories= new Stack<>();
+    private Stack<Category> categories;
 
     @Override
     public Stack<Category> fetch() {
+        if (categories != null) return categories;
+        categories = new Stack<>();
         try {
             getConnection();
             query = "SELECT * From categories";
@@ -77,5 +79,9 @@ public class CategoryDao extends Dao<Category> {
             closeStatementAndConnection(pStatement,connection);
         }
         return category;
+    }
+
+    public Stack<Category> getCategories() {
+        return categories;
     }
 }
