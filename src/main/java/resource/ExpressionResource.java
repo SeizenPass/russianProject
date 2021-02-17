@@ -4,10 +4,7 @@ package resource;
 import dao.ExpressionDao;
 import model.Expression;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -35,5 +32,11 @@ public class ExpressionResource implements MainResource<Expression> {
     @Override
     public List<Expression> list() {
         return expressionDao.fetch();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void add(Expression e) {
+        expressionDao.add(e);
     }
 }

@@ -40,7 +40,24 @@ public class ExpressionDao extends Dao<Expression> {
 
     @Override
     public void add(Expression o) {
-
+        try {
+            getConnection();
+            query = "INSERT INTO expressions (expression, translation, transcription," +
+                    " description, example, category_id) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+            pStatement = connection.prepareStatement(query);
+            pStatement.setString(1, o.getExpression());
+            pStatement.setString(2, o.getTranslation());
+            pStatement.setString(3, o.getTranscription());
+            pStatement.setString(4, o.getDescription());
+            pStatement.setString(5, o.getExample());
+            pStatement.setInt(6, o.getCategoryId());
+            pStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeStatementAndConnection(pStatement, connection);
+        }
     }
 
     @Override
@@ -72,7 +89,7 @@ public class ExpressionDao extends Dao<Expression> {
                 int catId = resultSet.getInt("category_id");
                 expression.setId(expr_id);
                 expression.setExpression(expr);
-                expression.setTranscription(translation);
+                expression.setTranslation(translation);
                 expression.setTranscription(transcription);
                 expression.setDescription(description);
                 expression.setExample(example);
@@ -149,7 +166,7 @@ public class ExpressionDao extends Dao<Expression> {
                 Expression expression = new Expression();
                 expression.setId(expr_id);
                 expression.setExpression(expr);
-                expression.setTranscription(translation);
+                expression.setTranslation(translation);
                 expression.setTranscription(transcription);
                 expression.setDescription(description);
                 expression.setExample(example);
@@ -169,7 +186,6 @@ public class ExpressionDao extends Dao<Expression> {
             }
             resultSet = pStatement.executeQuery();
             if (resultSet.next()) {
-                System.out.println(resultSet.getInt(1));
                 searchResult.setTotal((resultSet.getInt(1) / 10) + 1);
             }
 
