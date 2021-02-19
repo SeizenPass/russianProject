@@ -13,13 +13,17 @@ public class CategoryDao extends Dao<Category> {
         categories = new Stack<>();
         try {
             getConnection();
-            query = "SELECT * From categories";
+            query = "SELECT c.id, c.name, count(e.id) FROM categories c " +
+                    "LEFT JOIN expressions e on c.id = e.category_id " +
+                    "GROUP BY c.id, c.name " +
+                    "ORDER BY 3 DESC";
             pStatement = connection.prepareStatement(query);
             resultSet = pStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt(1);
                 String name = resultSet.getString(2);
-                Category category = new Category(id, name);
+                int count = resultSet.getInt(3);
+                Category category = new Category(id, name, count);
                 categories.add(category);
             }
         } catch (Exception e) {

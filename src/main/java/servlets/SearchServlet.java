@@ -34,7 +34,7 @@ public class SearchServlet extends HttpServlet {
 
     private void search(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         String word = "";
-        int cId = 1, page = 1;
+        int cId = 0, page = 1;
         if (request.getParameter("word") != null) word = request.getParameter("word");
         if (request.getParameter("categoryId") != null) cId = Integer.parseInt(request.getParameter("categoryId"));
         if (request.getParameter("page") != null) page = Integer.parseInt(request.getParameter("page"));

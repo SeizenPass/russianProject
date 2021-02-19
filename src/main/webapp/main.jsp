@@ -52,7 +52,7 @@
                     <c:forEach items="${requestScope.categoryList}" var="obj">
                         <li class="nav-item">
                         <h2></h2>
-                            <a class="nav-link active" style="margin-left: -100px;margin-bottom: 5px;" href="search?categoryId=${obj.id}"><c:out value="${obj.name}"/></a>
+                            <a class="nav-link active" style="margin-left: -100px;margin-bottom: 5px;" href="search?categoryId=${obj.id}"><c:out value="${obj.name}"/> (${obj.count})</a>
                         </li>
                     </c:forEach>
 

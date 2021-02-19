@@ -40,13 +40,21 @@
                 <input type="search" class="form-control rounded" placeholder="Поиск" aria-label="Search"
                        aria-describedby="search-addon" name="word" value="${param.word}" />
                 <select name="categoryId">
+                    <c:choose>
+                        <c:when test="${empty param.categoryId || param.categoryId == 0}">
+                            <option selected value="0">Все</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="0">Все</option>
+                        </c:otherwise>
+                    </c:choose>
                     <c:forEach items="${requestScope.categoryList}" var="cat">
                     <c:choose>
                         <c:when test="${param.categoryId == cat.id}">
-                            <option selected value="${cat.id}">${cat.name}</option>
+                            <option selected value="${cat.id}">${cat.name} (${cat.count})</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="${cat.id}">${cat.name}</option>
+                            <option value="${cat.id}">${cat.name} (${cat.count})</option>
                         </c:otherwise>
                     </c:choose>
                     </c:forEach>

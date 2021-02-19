@@ -3,6 +3,15 @@ package model;
 public class Category {
     private int id;
     private String name;
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public int getId() {
         return id;
@@ -23,8 +32,9 @@ public class Category {
     public Category() {
     }
 
-    public Category(int id, String name) {
+    public Category(int id, String name, int count) {
         this.id = id;
         this.name = name;
+        this.count = count;
     }
 }

@@ -126,7 +126,7 @@ public class ExpressionDao extends Dao<Expression> {
                 query += likeStr;
                 totalQuery += likeStr;
             }
-            if (categoryId != 1) {
+            if (categoryId != 0) {
                 if (combined) {
                     query += " AND ";
                     totalQuery += " AND ";
@@ -139,7 +139,7 @@ public class ExpressionDao extends Dao<Expression> {
                 query += cIdStr;
                 totalQuery += cIdStr;
             }
-            query += " LIMIT 10 OFFSET ? ";
+            query += "ORDER BY expression LIMIT 10 OFFSET ? ";
             pStatement = connection.prepareStatement(query);
 
             int propertyCounter = 1;
@@ -149,7 +149,7 @@ public class ExpressionDao extends Dao<Expression> {
                     pStatement.setString(propertyCounter++, likeWord);
                 }
             }
-            if (categoryId != 1) {
+            if (categoryId != 0) {
                 pStatement.setInt(propertyCounter++, categoryId);
             }
             pStatement.setInt(propertyCounter++, (page-1) * 10);
@@ -181,7 +181,7 @@ public class ExpressionDao extends Dao<Expression> {
                     pStatement.setString(propertyCounter++, likeWord);
                 }
             }
-            if (categoryId != 1) {
+            if (categoryId != 0) {
                 pStatement.setInt(propertyCounter++, categoryId);
             }
             resultSet = pStatement.executeQuery();
