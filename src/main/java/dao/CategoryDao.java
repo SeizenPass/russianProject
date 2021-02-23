@@ -16,7 +16,7 @@ public class CategoryDao extends Dao<Category> {
             query = "SELECT c.id, c.name, count(e.id) FROM categories c " +
                     "LEFT JOIN expressions e on c.id = e.category_id " +
                     "GROUP BY c.id, c.name " +
-                    "ORDER BY 3 DESC";
+                    "ORDER BY 2";
             pStatement = connection.prepareStatement(query);
             resultSet = pStatement.executeQuery();
             while (resultSet.next()) {

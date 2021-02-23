@@ -15,13 +15,13 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="${pageContext.request.contextPath}">Главная <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/main">Главная <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="search">Полный поиск <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Статья</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/article.pdf" target="_blank">Статья</a>
             </li>
             <li class="nav-item" style="display: none">
                 <a class="nav-link disabled" href="#">Категории</a>
@@ -41,3 +41,4 @@
         </form>
     </div>
 </nav>
+

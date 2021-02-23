@@ -26,7 +26,21 @@
             url: 'rest/expression/<%=request.getParameter("id")%>'
         });
 
+        var ajaxCat;
+
         ajaxCall.done(function(data) {
+            if (data.categoryId != null) {
+                ajaxCat = $.ajax({
+                    dataType: 'json',
+                    url: 'rest/category/' + data.categoryId
+                });
+                ajaxCat.done(function (data) {
+                    if (data.name != null) {
+                        $('#category').text(data.name);
+                        $('#category').parent().show();
+                    }
+                })
+            }
             if (data.expression != null && data.expression.trim() !== "") {
                 $('#expression').text(data.expression);
                 $('#expression').parent().show();
@@ -63,7 +77,9 @@
                 $('#example').text('не указано');
             }
         });
-    });</script>
+
+    });
+    </script>
 </head>
 
 <body>
@@ -72,23 +88,27 @@
 <div class="jumbotron">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12" style="margin:20px; background-color: dimgray; color:white;text-align: center; display: none;">
-                <h2>Крылатая фраза</h2>
+            <div class="col-sm-12" style="margin:20px; background-color: rgb(41 50 60); color:white;text-align: center; border-radius: 12px; display: none;">
+                <h2>Категория</h2>
+                <p id="category"></p>
+            </div>
+                <div class="col-sm-12" style="margin:20px; background-color: #343a40; color:white;text-align: center; border-radius: 12px; display: none;">
+                <h2>Крылатое выражение</h2>
                 <p id="expression"></p>
             </div>
-            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; color:black; background-color: lightsteelblue; display: none;">
+            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; color:white; background-color: #007bff; border-radius: 12px; display: none;">
                 <h4>Перевод:</h4>
                 <p id="translation"></p>
             </div>
-            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; color:black; background-color: lightsteelblue; display: none;">
-                <h4>Транскрипция</h4>
+            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; color:white; background-color: #007bff; border-radius: 12px; display: none;">
+                <h4>Транслитерация</h4>
                 <p id="transcription"></p>
             </div>
-            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; color:black; background-color: lightsteelblue; display: none;">
+            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; color:white; background-color: #007bff; border-radius: 12px; display: none;">
                 <h4>Описание</h4>
                 <p id="description"></p>
             </div>
-            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; color:black; background-color: lightsteelblue; display: none;">
+            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; color:white; background-color: #007bff; border-radius: 12px; display: none;">
                 <h4>Пример</h4>
                 <p id="example"></p>
             </div>

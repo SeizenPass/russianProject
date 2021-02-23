@@ -120,9 +120,10 @@ public class ExpressionDao extends Dao<Expression> {
                 combined = true;
                 query += " WHERE ";
                 totalQuery += " WHERE ";
-                String likeStr = " (expression LIKE ? " +
-                        "OR translation LIKE ? OR transcription LIKE ? OR description LIKE ? " +
-                        "OR example LIKE ?) ";
+                String likeStr = " (UPPER(expression) LIKE UPPER(?) " +
+                        "OR UPPER(translation) LIKE UPPER(?) OR UPPER(transcription)" +
+                        " LIKE UPPER(?) OR UPPER(description) LIKE UPPER(?) " +
+                        "OR UPPER(example) LIKE UPPER(?)) ";
                 query += likeStr;
                 totalQuery += likeStr;
             }

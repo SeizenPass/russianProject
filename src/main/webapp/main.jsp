@@ -37,9 +37,9 @@
 
     <div class="jumbotron">
         <div class="container">
-            <h1 class="display-3">Латинские крылатые фразы, как они появились и их история</h1>
-            <p>В данной статье мы расскажем вам о происхождении...</p>
-            <p><a class="btn btn-primary btn-lg" href="#" role="button">Узнать больше  &raquo;</a></p>
+            <h1 class="display-3">Латинские крылатые выражения как прием ораторского мастерства </h1>
+            <p>В данной статье мы расскажем вам как латинские крылатые выражения улучшат вашу красноречивость...</p>
+            <p><a class="btn btn-primary btn-lg" href="article.pdf" role="button" target="_blank">Узнать больше  &raquo;</a></p>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
 
         <div class="row">
             <div class="col-sm-4">
-
+                <h3 style="margin-left: -100px;">Категории</h3>
                 <ul class="nav nav-pills flex-column">
                     <c:forEach items="${requestScope.categoryList}" var="obj">
                         <li class="nav-item">
@@ -61,8 +61,12 @@
                 <hr class="d-sm-none">
             </div>
             <div class="col-md-8" style="border-left: 5px solid black;">
-
-
+                <h3>Что представляют собой выражения на данном веб-портале?</h3>
+                <p>Во-первых, пословицы и поговорки. На всякий случай, напоминаем: разница
+                 между ними в том, что первые выражают законченную мысль, зачастую поучение, вторые же
+                такой мысли не выражают</p>
+                <p>Во-вторых, вошли изречения, которые принято называть <i>крылатыми</i>.</p>
+                <p>Наконец, встречаются некоторые устойчивые выражения, такие как <i>alter ego</i> ["второй я"] etc.</p>
             </div>
 
         </div>
