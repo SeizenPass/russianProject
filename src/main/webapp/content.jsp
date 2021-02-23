@@ -15,7 +15,7 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <title></title>
+    <title>Крылатое выражение</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/jumbotron/">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -26,97 +26,89 @@
             url: 'rest/expression/<%=request.getParameter("id")%>'
         });
 
+        var ajaxCat;
+
         ajaxCall.done(function(data) {
-            if (data.expression != null) {
+            if (data.categoryId != null) {
+                ajaxCat = $.ajax({
+                    dataType: 'json',
+                    url: 'rest/category/' + data.categoryId
+                });
+                ajaxCat.done(function (data) {
+                    if (data.name != null) {
+                        $('#category').text(data.name);
+                        $('#category').parent().show();
+                    }
+                })
+            }
+            if (data.expression != null && data.expression.trim() !== "") {
                 $('#expression').text(data.expression);
+                $('#expression').parent().show();
             } else {
                 $('#expression').text('не указано');
             }
 
-            if (data.translation != null) {
+            if (data.translation != null && data.translation.trim() !== "") {
                 $('#translation').text(data.translation);
+                $('#translation').parent().show();
             }else {
                 $('#translation').text('не указано');
             }
 
-            if (data.transcription != null) {
+            if (data.transcription != null && data.transcription.trim() !== "") {
                 $('#transcription').text(data.transcription);
+                $('#transcription').parent().show();
             }else {
                 $('#transcription').text('не указано');
             }
 
-            if (data.description != null) {
+            if (data.description != null && data.description.trim() !== "") {
                 $('#description').text(data.description);
+                $('#description').parent().show();
             }else {
                 $('#description').text('не указано');
             }
 
-            if (data.example != null) {
+            if (data.example != null && data.example.trim() !== "") {
                 $('#example').text(data.example);
+                $('#example').parent().show();
             }
             else {
                 $('#example').text('не указано');
             }
         });
-    });</script>
+
+    });
+    </script>
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Главная <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Статья</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Категории</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Дропчик</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Что то </a>
-                    <a class="dropdown-item" href="#">Еще что то</a>
-                    <a class="dropdown-item" href="#">Еще что то </a>
-                </div>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2 selectpicker" type="text" placeholder="Поиск" aria-label="Search" data-live-search="true">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
-
-
-        </form>
-    </div>
-</nav>
+<%@include file="nav.jsp"%>
 <div class="jumbotron">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12" style="margin:20px; height:200px; background-color: dimgray; color:white;text-align: center;">
-                <h2>Крылатая фраза</h2>
+            <div class="col-sm-12" style="margin:20px; background-color: rgb(41 50 60); color:white;text-align: center; border-radius: 12px; display: none;">
+                <h2>Категория</h2>
+                <p id="category"></p>
+            </div>
+                <div class="col-sm-12" style="margin:20px; background-color: #343a40; color:white;text-align: center; border-radius: 12px; display: none;">
+                <h2>Крылатое выражение</h2>
                 <p id="expression"></p>
             </div>
-            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; height:150px; color:black; background-color: lightsteelblue">
+            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; color:white; background-color: #007bff; border-radius: 12px; display: none;">
                 <h4>Перевод:</h4>
                 <p id="translation"></p>
             </div>
-            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; height:150px; color:black; background-color: lightsteelblue">
-                <h4>Транскрипция</h4>
+            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; color:white; background-color: #007bff; border-radius: 12px; display: none;">
+                <h4>Транслитерация</h4>
                 <p id="transcription"></p>
             </div>
-            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; height:150px; color:black; background-color: lightsteelblue">
+            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; color:white; background-color: #007bff; border-radius: 12px; display: none;">
                 <h4>Описание</h4>
                 <p id="description"></p>
             </div>
-            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; height:150px; color:black; background-color: lightsteelblue">
+            <div class="col-sm-12" style="margin-left:20px; margin-top: 30px; color:white; background-color: #007bff; border-radius: 12px; display: none;">
                 <h4>Пример</h4>
                 <p id="example"></p>
             </div>

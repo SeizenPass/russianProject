@@ -40,7 +40,24 @@ public class ExpressionDao extends Dao<Expression> {
 
     @Override
     public void add(Expression o) {
-
+        try {
+            getConnection();
+            query = "INSERT INTO expressions (expression, translation, transcription," +
+                    " description, example, category_id) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+            pStatement = connection.prepareStatement(query);
+            pStatement.setString(1, o.getExpression());
+            pStatement.setString(2, o.getTranslation());
+            pStatement.setString(3, o.getTranscription());
+            pStatement.setString(4, o.getDescription());
+            pStatement.setString(5, o.getExample());
+            pStatement.setInt(6, o.getCategoryId());
+            pStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeStatementAndConnection(pStatement, connection);
+        }
     }
 
     @Override
@@ -72,7 +89,7 @@ public class ExpressionDao extends Dao<Expression> {
                 int catId = resultSet.getInt("category_id");
                 expression.setId(expr_id);
                 expression.setExpression(expr);
-                expression.setTranscription(translation);
+                expression.setTranslation(translation);
                 expression.setTranscription(transcription);
                 expression.setDescription(description);
                 expression.setExample(example);
@@ -103,13 +120,14 @@ public class ExpressionDao extends Dao<Expression> {
                 combined = true;
                 query += " WHERE ";
                 totalQuery += " WHERE ";
-                String likeStr = " (expression LIKE ? " +
-                        "OR translation LIKE ? OR transcription LIKE ? OR description LIKE ? " +
-                        "OR example LIKE ?) ";
+                String likeStr = " (UPPER(expression) LIKE UPPER(?) " +
+                        "OR UPPER(translation) LIKE UPPER(?) OR UPPER(transcription)" +
+                        " LIKE UPPER(?) OR UPPER(description) LIKE UPPER(?) " +
+                        "OR UPPER(example) LIKE UPPER(?)) ";
                 query += likeStr;
                 totalQuery += likeStr;
             }
-            if (categoryId != 1) {
+            if (categoryId != 0) {
                 if (combined) {
                     query += " AND ";
                     totalQuery += " AND ";
@@ -122,7 +140,7 @@ public class ExpressionDao extends Dao<Expression> {
                 query += cIdStr;
                 totalQuery += cIdStr;
             }
-            query += " LIMIT 10 OFFSET ? ";
+            query += "ORDER BY expression LIMIT 10 OFFSET ? ";
             pStatement = connection.prepareStatement(query);
 
             int propertyCounter = 1;
@@ -132,7 +150,7 @@ public class ExpressionDao extends Dao<Expression> {
                     pStatement.setString(propertyCounter++, likeWord);
                 }
             }
-            if (categoryId != 1) {
+            if (categoryId != 0) {
                 pStatement.setInt(propertyCounter++, categoryId);
             }
             pStatement.setInt(propertyCounter++, (page-1) * 10);
@@ -149,7 +167,7 @@ public class ExpressionDao extends Dao<Expression> {
                 Expression expression = new Expression();
                 expression.setId(expr_id);
                 expression.setExpression(expr);
-                expression.setTranscription(translation);
+                expression.setTranslation(translation);
                 expression.setTranscription(transcription);
                 expression.setDescription(description);
                 expression.setExample(example);
@@ -164,12 +182,11 @@ public class ExpressionDao extends Dao<Expression> {
                     pStatement.setString(propertyCounter++, likeWord);
                 }
             }
-            if (categoryId != 1) {
+            if (categoryId != 0) {
                 pStatement.setInt(propertyCounter++, categoryId);
             }
             resultSet = pStatement.executeQuery();
             if (resultSet.next()) {
-                System.out.println(resultSet.getInt(1));
                 searchResult.setTotal((resultSet.getInt(1) / 10) + 1);
             }
 
